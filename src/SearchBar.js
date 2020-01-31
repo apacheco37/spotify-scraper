@@ -17,32 +17,34 @@ class SearchBar extends React.Component {
   }
 
   handleClick() {
-    let token = '';
-
-    axios.post(
-      `https://accounts.spotify.com/api/token`,
-      {
-        'grant_type	': 'client_credentials'
-      },
-      {
-        headers: {
-          'Authorization': `Basic 7c0b9ed0ae194c888450394069d7cb59:81177d6e289e424c84ce9a21a8b2f775`
-        }
-      }).then(res => {
-        console.log(res);
-        this.token = res.data.access_token;
-      }).catch(err => {
-        console.log(err);
-      });
-
-    axios.get(`https://api.spotify.com/v1/search?q=herzeleid&type=track`, {
+    const params = 'grant_type=client_credentials';
+    const encodedString = new Buffer('7c0b9ed0ae194c888450394069d7cb59:81177d6e289e424c84ce9a21a8b2f775').toString('base64');
+    const headers = {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Basic ${encodedString}`,
+        'content-type': 'application/x-www-form-urlencoded'
       }
-    }).then(res => {
-      const songs = res.data;
-      this.setState({ songs: songs });
-    })
+    }
+
+    axios.post(`https://accounts.spotify.com/api/token`, params, headers).then(res => {
+      this.callGet(res.data.access_token);
+    }).catch(err => {
+      console.log(`POST ERROR: ` + err);
+    });
+  }
+
+  callGet(token) {
+    const headers = {
+      headers: {
+        'Authorization': `Bearer ` + token
+      }
+    };
+
+    axios.get(`https://api.spotify.com/v1/search?q=${this.state.searchTerm}&type=track`, headers).then(res => {
+      this.setState({ songs: res.data.tracks.items });
+    }).catch(err => {
+      console.log("GET ERROR: " + err);
+    });
   }
 
   render() {
@@ -56,7 +58,7 @@ class SearchBar extends React.Component {
           onChange={e => this.handleOnChange(e)}
           value={this.state.searchTerm}
         />
-        <button onClick={this.handleClick}>Search</button>
+        <button onClick={(e) => this.handleClick(e)}>Search</button>
         <Results songs={this.state.songs} />
       </div>
     );

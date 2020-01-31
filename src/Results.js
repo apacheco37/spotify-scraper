@@ -7,7 +7,9 @@ class Results extends React.Component {
       <div>
         {this.props.songs.map((song, index) => (
           <div key={index}>
-            <h3>{song.name}</h3>
+            <h3>Name: {song.name}</h3>
+            <p>Artist: {song.artists[0].name}</p>
+            <p>Popularity: {song.popularity}</p>
           </div>
         ))}
       </div>
