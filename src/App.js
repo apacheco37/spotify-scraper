@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import SearchBar from './SearchBar';
+import SearchBar from './components/SearchBar';
 
 class App extends React.Component {
   render() {
     return (
-      <SearchBar />
+      <div class="site-padding">
+        <SearchBar />
+      </div>
     );
   }
 }
