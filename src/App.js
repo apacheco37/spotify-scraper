@@ -5,7 +5,7 @@ import SearchBar from './components/SearchBar';
 class App extends React.Component {
   render() {
     return (
-      <div class="site-padding">
+      <div className="site-padding">
         <SearchBar />
       </div>
     );
