@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import Results from './Results';
 
@@ -51,14 +53,18 @@ class SearchBar extends React.Component {
     return (
       <div>
         <h1>Please input the name of the song:</h1>
-        <input
-          name="text"
-          type="text"
-          placeholder="Song name"
+        <TextField 
+          id="outlined-basic"
+          label="Song name"
+          variant="outlined"
+          size="small"
           onChange={e => this.handleOnChange(e)}
-          value={this.state.searchTerm}
-        />
-        <button onClick={(e) => this.handleClick(e)}>Search</button>
+          value={this.state.searchTerm} />
+        <Button
+          variant="contained"
+          color="default"
+          onClick={(e) => this.handleClick(e)}
+        >Search</Button>
         <Results songs={this.state.songs} />
       </div>
     );
