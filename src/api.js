@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const getToken = async () => {
+  const spotifyClientKey = 
+    process.env.REACT_APP_SPOTIFY_CLIENT_ID +
+    ':' +
+    process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
   const params = 'grant_type=client_credentials';
-  const encodedString = new Buffer('7c0b9ed0ae194c888450394069d7cb59:81177d6e289e424c84ce9a21a8b2f775').toString('base64');
+  const encodedString = new Buffer(spotifyClientKey).toString('base64');
   const headers = {
     headers: {
       'Authorization': `Basic ${encodedString}`,
