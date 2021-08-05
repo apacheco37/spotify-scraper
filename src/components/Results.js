@@ -1,16 +1,20 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import './Results.css';
 
 class Results extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="results-panel">
         {this.props.songs.map((song, index) => (
-          <div key={index}>
-            <h3>Name: {song.name}</h3>
-            <p>Artist: {song.artists[0].name}</p>
-            <p>Popularity: {song.popularity}</p>
-          </div>
+          <Card variant="outlined" key={index}>
+            <div className="card-content">
+              <h3>Name: {song.name}</h3>
+              <p>Artist: {song.artists[0].name}</p>
+              <p>Popularity: {song.popularity}</p>
+            </div>
+          </Card>
         ))}
       </div>
     );
