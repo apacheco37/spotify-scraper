@@ -3,13 +3,22 @@ import './App.css';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import Header from './components/Header';
+import * as api from './api';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: '',
       songs: []
     };
+  }
+
+  async componentDidMount() {
+    const token = await api.getToken();
+    this.setState({
+      token
+    });
   }
 
   handleSearchTermSubmit(songs) {

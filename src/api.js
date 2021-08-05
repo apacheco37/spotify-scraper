@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getToken = async () => {
+export const getToken = async () => {
   const spotifyClientKey = 
     process.env.REACT_APP_SPOTIFY_CLIENT_ID +
     ':' +
