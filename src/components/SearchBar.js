@@ -2,8 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { getSongsData } from '../api';
-
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
@@ -17,8 +15,7 @@ class SearchBar extends React.Component {
   }
 
   async handleClick() {
-    const songs = await getSongsData(this.state.searchTerm);
-    this.props.onSearchTermSubmit(songs);
+    this.props.onSearchTermSubmit(this.state.searchTerm);
   }
 
   render() {

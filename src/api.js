@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getToken = async () => {
+export const getToken = async () => {
   const spotifyClientKey = 
     process.env.REACT_APP_SPOTIFY_CLIENT_ID +
     ':' +
@@ -25,10 +25,10 @@ const getToken = async () => {
   return token.data.access_token;
 }
 
-export const getSongsData = async (searchTerm) => {
+export const getSongsData = async (token, searchTerm) => {
   const headers = {
     headers: {
-      'Authorization': `Bearer ` + await getToken()
+      'Authorization': `Bearer ` + token
     }
   };
 
