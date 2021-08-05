@@ -24,7 +24,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div>
-        <h1>Please input the name of the song:</h1>
+        <h2>Please input the name of the song:</h2>
         <TextField 
           id="outlined-basic"
           label="Song name"
