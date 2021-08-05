@@ -25,10 +25,10 @@ export const getToken = async () => {
   return token.data.access_token;
 }
 
-export const getSongsData = async (searchTerm) => {
+export const getSongsData = async (token, searchTerm) => {
   const headers = {
     headers: {
-      'Authorization': `Bearer ` + await getToken()
+      'Authorization': `Bearer ` + token
     }
   };
 

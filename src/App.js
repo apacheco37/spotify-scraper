@@ -21,7 +21,8 @@ class App extends React.Component {
     });
   }
 
-  handleSearchTermSubmit(songs) {
+  async handleSearchTermSubmit(searchTerm) {
+    const songs = await api.getSongsData(this.state.token, searchTerm);
     this.setState({songs});
   }
 
