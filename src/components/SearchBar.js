@@ -3,12 +3,15 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
+import { Radio, RadioGroup } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ''
+      searchTerm: '',
+      viewType: 'card'
     };
   }
 
@@ -21,6 +24,10 @@ class SearchBar extends React.Component {
     if (this.state.searchTerm !== '') {
       this.props.onSearchTermSubmit(this.state.searchTerm);
     }
+  }
+
+  handleViewTypeChange(e) {
+    this.setState({ viewType: e.target.value })
   }
 
   render() {
@@ -42,6 +49,12 @@ class SearchBar extends React.Component {
                 variant="contained"
                 color="default"
               >Search</Button>
+              <RadioGroup row
+                value={this.state.viewType}
+                onChange={e => this.handleViewTypeChange(e)}>
+                <FormControlLabel value="card" control={<Radio />} label="Card View" />
+                <FormControlLabel value="table" control={<Radio />} label="Table View" />
+              </RadioGroup>
             </FormGroup>
           </FormControl>
         </form>
