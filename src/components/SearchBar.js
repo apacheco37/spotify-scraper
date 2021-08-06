@@ -5,8 +5,16 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import { Radio, RadioGroup } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
+
+const useStyles = theme => ({
+  radioGroup: {
+    paddingLeft: '1.5rem'
+  }
+})
 
 class SearchBar extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +39,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <h2>Please input the name of the song:</h2>
@@ -50,6 +59,7 @@ class SearchBar extends React.Component {
                 color="default"
               >Search</Button>
               <RadioGroup row
+                className={classes.radioGroup}
                 value={this.state.viewType}
                 onChange={e => this.handleViewTypeChange(e)}>
                 <FormControlLabel value="card" control={<Radio />} label="Card View" />
@@ -63,4 +73,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+export default withStyles(useStyles)(SearchBar);
