@@ -15,7 +15,9 @@ class SearchBar extends React.Component {
   }
 
   async handleClick() {
-    this.props.onSearchTermSubmit(this.state.searchTerm);
+    if (this.state.searchTerm !== '') {
+      this.props.onSearchTermSubmit(this.state.searchTerm);
+    }
   }
 
   render() {
