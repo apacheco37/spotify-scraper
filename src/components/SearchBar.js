@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class SearchBar extends React.Component {
     this.setState({ searchTerm: e.target.value })
   }
 
-  async handleClick() {
+  async handleClick(e) {
+    e.preventDefault();
     if (this.state.searchTerm !== '') {
       this.props.onSearchTermSubmit(this.state.searchTerm);
     }
@@ -24,18 +27,24 @@ class SearchBar extends React.Component {
     return (
       <div>
         <h2>Please input the name of the song:</h2>
-        <TextField 
-          id="outlined-basic"
-          label="Song name"
-          variant="outlined"
-          size="small"
-          onChange={e => this.handleOnChange(e)}
-          value={this.state.searchTerm} />
-        <Button
-          variant="contained"
-          color="default"
-          onClick={(e) => this.handleClick(e)}
-        >Search</Button>
+        <form onSubmit={e => this.handleClick(e)}>
+          <FormControl>
+            <FormGroup row>
+              <TextField
+                id="outlined-basic"
+                label="Song name"
+                variant="outlined"
+                size="small"
+                onChange={e => this.handleOnChange(e)}
+                value={this.state.searchTerm} />
+              <Button
+                type="submit"
+                variant="contained"
+                color="default"
+              >Search</Button>
+            </FormGroup>
+          </FormControl>
+        </form>
       </div>
     );
   }
