@@ -25,7 +25,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       token: '',
-      songs: []
+      songs: [],
+      viewType: 'card'
     };
   }
 
@@ -38,7 +39,11 @@ class App extends React.Component {
 
   async handleSearchTermSubmit(searchTerm) {
     const songs = await api.getSongsData(this.state.token, searchTerm);
-    this.setState({songs});
+    this.setState({ songs });
+  }
+
+  handleViewTypeSwitch(viewType) {
+    this.setState({ viewType });
   }
 
   render() {
@@ -47,8 +52,12 @@ class App extends React.Component {
         <CssBaseline />
         <div className="site-padding">
           <Header/>
-          <SearchBar onSearchTermSubmit={e => this.handleSearchTermSubmit(e)} />
-          <Results songs={this.state.songs} />
+          <SearchBar 
+            onSearchTermSubmit={e => this.handleSearchTermSubmit(e)}
+            onViewTypeSwitch={e => this.handleViewTypeSwitch(e)}/>
+          {this.state.songs.length > 0 && 
+            <Results songs={this.state.songs} viewType={this.state.viewType} />
+          }
         </div>
       </ThemeProvider>
     );

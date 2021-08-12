@@ -35,7 +35,8 @@ class SearchBar extends React.Component {
   }
 
   handleViewTypeChange(e) {
-    this.setState({ viewType: e.target.value })
+    this.setState({ viewType: e.target.value });
+    this.props.onViewTypeSwitch(e.target.value);
   }
 
   render() {

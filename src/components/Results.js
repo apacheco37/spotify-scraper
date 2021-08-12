@@ -1,21 +1,21 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import './Results.css';
+import ResultsCards from './ResultsCards';
+import ResultsTable from './ResultsTable';
 
 class Results extends React.Component {
 
   render() {
+    let results;
+    if (this.props.viewType === 'card') {
+      results = <ResultsCards songs={this.props.songs}></ResultsCards>;
+    } else if (this.props.viewType === 'table') {
+      results = <ResultsTable songs={this.props.songs}></ResultsTable>;
+    }
+
     return (
       <div className="results-panel">
-        {this.props.songs.map((song, index) => (
-          <Card variant="outlined" key={index}>
-            <div className="card-content">
-              <h3>Name: {song.name}</h3>
-              <p>Artist: {song.artists[0].name}</p>
-              <p>Popularity: {song.popularity}</p>
-            </div>
-          </Card>
-        ))}
+        { results }
       </div>
     );
   }
