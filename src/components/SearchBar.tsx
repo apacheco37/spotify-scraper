@@ -5,17 +5,27 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import { Radio, RadioGroup } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { withStyles } from '@material-ui/core/styles';
+import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
-const useStyles = theme => ({
+const styles = (theme: Theme) => ({
   radioGroup: {
     paddingLeft: '1.5rem'
   }
 })
 
-class SearchBar extends React.Component {
+interface IProps extends WithStyles<typeof styles>{
+  onSearchTermSubmit: Function;
+  onViewTypeSwitch: Function;
+}
 
-  constructor(props) {
+interface IState {
+  searchTerm: string;
+  viewType: string;
+}
+
+class SearchBar extends React.Component<IProps, IState> {
+
+  constructor(props: IProps) {
     super(props);
     this.state = {
       searchTerm: '',
@@ -23,24 +33,23 @@ class SearchBar extends React.Component {
     };
   }
 
-  handleOnChange = e => {
+  handleOnChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     this.setState({ searchTerm: e.target.value })
   }
 
-  async handleClick(e) {
+  async handleClick(e: React.SyntheticEvent) {
     e.preventDefault();
     if (this.state.searchTerm !== '') {
       this.props.onSearchTermSubmit(this.state.searchTerm);
     }
   }
 
-  handleViewTypeChange(e) {
+  handleViewTypeChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ viewType: e.target.value });
     this.props.onViewTypeSwitch(e.target.value);
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <h2>Please input the name of the song:</h2>
@@ -60,7 +69,7 @@ class SearchBar extends React.Component {
                 color="default"
               >Search</Button>
               <RadioGroup row
-                className={classes.radioGroup}
+                className={this.props.classes.radioGroup}
                 value={this.state.viewType}
                 onChange={e => this.handleViewTypeChange(e)}>
                 <FormControlLabel value="card" control={<Radio />} label="Card View" />
@@ -74,4 +83,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(SearchBar);
+export default withStyles(styles)(SearchBar);

@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Track from '../interfaces/track.interface';
 
 const useStyles = makeStyles({
   table: {
@@ -14,7 +15,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ResultsTable(props) {
+interface IProps {
+  tracks: Track[];
+}
+
+export default function ResultsTable(props: IProps) {
   const classes = useStyles();
 
   return (
@@ -28,13 +33,13 @@ export default function ResultsTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.songs.map((row) => (
-            <TableRow key={row.id}>
+          {props.tracks.map((track: Track) => (
+            <TableRow key={track.id}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {track.name}
               </TableCell>
-              <TableCell align="right">{row.artists[0].name}</TableCell>
-              <TableCell align="right">{row.popularity}</TableCell>
+              <TableCell align="right">{track.artists[0].name}</TableCell>
+              <TableCell align="right">{track.popularity}</TableCell>
             </TableRow>
           ))}
         </TableBody>
