@@ -1,4 +1,6 @@
 import axios from 'axios';
+import SearchResponse from './interfaces/searchresponse.interface';
+import TokenResponse from './interfaces/tokenresponse.interface';
 
 export const getToken = async () => {
   const spotifyClientKey = 
@@ -14,31 +16,31 @@ export const getToken = async () => {
     }
   }
 
-  let token;
+  let tokenResponse;
 
   try {
-    token = await axios.post(`https://accounts.spotify.com/api/token`, params, headers);
+    tokenResponse = await axios.post<TokenResponse>(`https://accounts.spotify.com/api/token`, params, headers);
   } catch (err) {
     console.log(`POST ERROR: ` + err);
   }
 
-  return token.data.access_token;
+  return tokenResponse?.data.access_token || "";
 }
 
-export const getSongsData = async (token, searchTerm) => {
+export const getSongsData = async (token: string, searchTerm: string) => {
   const headers = {
     headers: {
       'Authorization': `Bearer ` + token
     }
   };
 
-  let songs;
+  let songsResponse;
 
   try {
-    songs = await axios.get(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track`, headers);
+    songsResponse = await axios.get<SearchResponse>(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track`, headers);
   } catch (err) {
     console.log("GET ERROR: " + err);
   }
 
-  return songs.data.tracks.items;
+  return songsResponse?.data.tracks?.items || [];
 }

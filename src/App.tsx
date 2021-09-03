@@ -7,6 +7,7 @@ import * as api from './api';
 import { ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Track from './interfaces/track.interface';
 
 const theme = createTheme({
   palette: {
@@ -20,8 +21,16 @@ const theme = createTheme({
   },
 });
 
-class App extends React.Component {
-  constructor(props) {
+interface IProps { }
+
+interface IState {
+  token: string;
+  songs: Track[];
+  viewType: string;
+}
+
+class App extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       token: '',
@@ -32,17 +41,15 @@ class App extends React.Component {
 
   async componentDidMount() {
     const token = await api.getToken();
-    this.setState({
-      token
-    });
+    this.setState({ token });
   }
 
-  async handleSearchTermSubmit(searchTerm) {
+  async handleSearchTermSubmit(searchTerm: string) {
     const songs = await api.getSongsData(this.state.token, searchTerm);
     this.setState({ songs });
   }
 
-  handleViewTypeSwitch(viewType) {
+  handleViewTypeSwitch(viewType: string) {
     this.setState({ viewType });
   }
 
@@ -53,10 +60,10 @@ class App extends React.Component {
         <div className="site-padding">
           <Header/>
           <SearchBar 
-            onSearchTermSubmit={e => this.handleSearchTermSubmit(e)}
-            onViewTypeSwitch={e => this.handleViewTypeSwitch(e)}/>
-          {this.state.songs.length > 0 && 
-            <Results songs={this.state.songs} viewType={this.state.viewType} />
+            onSearchTermSubmit={(e: string) => this.handleSearchTermSubmit(e)}
+            onViewTypeSwitch={(e: string) => this.handleViewTypeSwitch(e)}/>
+          { this.state.songs.length > 0 && 
+            <Results tracks={this.state.songs} viewType={this.state.viewType} />
           }
         </div>
       </ThemeProvider>
